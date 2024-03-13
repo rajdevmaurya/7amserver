@@ -7,9 +7,10 @@ function getStudentService(req) {
     return response
 }
 
-function regStudentService(req) {
-    const data = req.body.data
-    regStudentDAO(data)
+async function regStudentService(req) {
+    const data = req.body.data;
+    const result = await regStudentDAO(data)
+    return result;
 }
 
 module.exports = { getStudentService, regStudentService }

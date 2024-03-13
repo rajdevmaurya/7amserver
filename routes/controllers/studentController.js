@@ -9,10 +9,16 @@ router.get("/get-std", function (req, res, next) {
     const result = getStudentService(req);
     res.send(result)
 });
-
-router.post("/reg-std", function (req, res, next) {
-    regStudentService(req);
+/**
+ * url: http://localhost:2020/std/reg-std
+ * method: post
+ * data:{}
+ */
+router.post("/reg-std", async function (req, res, next) {
+    const result = await regStudentService(req);
+    res.send(result)
 })
+
 
 module.exports = router;
 
