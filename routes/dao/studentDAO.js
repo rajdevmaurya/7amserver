@@ -1,22 +1,27 @@
 var mongodb = require("mongodb")
+var getDB = require("../../common/getDB")
 
-function getStudentDAO(data) {
-    console.log("getStudentDAO")
-    // connect with DB
 
-    // perform required operation
+async function getStudentDAO() {
+    try {
+        console.log("getStudentDAO")
+        // connect with DB
+        const db = await getDB()
+        const collection = db.collection("students")
+        const result = await collection.find({}).toArray()
+        // send response to service
+        return result
+    } catch (e) {
+        console.error(e);
+    } finally {
 
-    // send response to service
-    return "get call"
+    }
 }
 
 async function regStudentDAO(data) {
     try {
         // connect with DB
-        const mongoClient = mongodb.MongoClient
-        const url = "mongodb+srv://u1:p1@7am.bxn3tzo.mongodb.net/admin?authSource=admin&replicaSet=atlas-3wl1e1-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true"
-        const server = await mongoClient.connect(url)
-        const db = server.db("school")
+        const db = await getDB()
         const collection = db.collection("students")
         // perform required operation
         const result = await collection.insertOne(data)
@@ -30,4 +35,16 @@ async function regStudentDAO(data) {
 
 }
 
-module.exports = { getStudentDAO, regStudentDAO }
+async function loginDAO(data) {
+    try {
+        const db = await getDB();
+        const collection = db.collection("students")
+        return await collection.find(data).toArray()
+    } catch (e) {
+
+    } finally {
+
+    }
+}
+
+module.exports = { getStudentDAO, regStudentDAO, loginDAO }
