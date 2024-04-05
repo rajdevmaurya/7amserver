@@ -1,6 +1,6 @@
 var mongodb = require("mongodb")
 var getDB = require("../../common/getDB")
-
+var ObjectId = mongodb.ObjectId
 
 async function getStudentDAO() {
     try {
@@ -46,5 +46,16 @@ async function loginDAO(data) {
 
     }
 }
+async function getStdByIdDAO(id) {
+    try {
+        const db = await getDB();
+        const collection = db.collection("students")
+        const result = await collection.find({ _id: ObjectId.createFromHexString(id) }).toArray()
+        return result;
+    } catch (e) {
+        console.log(e)
+    }
 
-module.exports = { getStudentDAO, regStudentDAO, loginDAO }
+}
+
+module.exports = { getStudentDAO, regStudentDAO, loginDAO, getStdByIdDAO }

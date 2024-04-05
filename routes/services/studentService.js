@@ -1,4 +1,4 @@
-const { getStudentDAO, regStudentDAO, loginDAO } = require("../dao/studentDAO")
+const { getStudentDAO, regStudentDAO, loginDAO, getStdByIdDAO } = require("../dao/studentDAO")
 const jwt = require('jsonwebtoken');
 
 async function getStudentService() {
@@ -29,4 +29,11 @@ async function loginService(req) {
     return response
 }
 
-module.exports = { getStudentService, regStudentService, loginService }
+async function getStdByIdService(req) {
+    const id = req.query.id;
+    const result = await getStdByIdDAO(id);
+    return result;
+}
+
+module.exports = { getStudentService, regStudentService, loginService, getStdByIdService }
+

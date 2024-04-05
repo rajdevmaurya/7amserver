@@ -2,7 +2,7 @@ var express = require('express')
 var jwt = require('jsonwebtoken')
 var router = express.Router();
 var validateToken = require('../../common/validateToken')
-const { getStudentService, regStudentService, loginService } = require("../services/studentService")
+const { getStudentService, regStudentService, loginService, getStdByIdService } = require("../services/studentService")
 
 router.get(
     "/get-std",
@@ -34,6 +34,11 @@ router.post("/reg-std", async function (req, res, next) {
 router.post("/login", async function (req, res, next) {
     const response = await loginService(req)
     res.send(response)
+})
+
+router.get("/get-user-by-id", validateToken, async function (req, res, next) {
+    const result = await getStdByIdService(req)
+    res.send(result);
 })
 
 
