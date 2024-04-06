@@ -58,4 +58,24 @@ async function getStdByIdDAO(id) {
 
 }
 
-module.exports = { getStudentDAO, regStudentDAO, loginDAO, getStdByIdDAO }
+async function updateStdDAO(id, data) {
+    try {
+        const db = await getDB();
+        const collection = db.collection("students")
+        const res = await collection.updateOne({ _id: ObjectId.createFromHexString(id) }, { $set: data })
+        return res;
+    } catch (e) {
+        console.error(e)
+    }
+}
+async function deleteStdDAO(id) {
+    try {
+        const db = await getDB();
+        const collection = db.collection("students")
+        const res = await collection.deleteOne({ _id: ObjectId.createFromHexString(id) })
+        return res;
+    } catch (e) {
+        console.error(e);
+    }
+}
+module.exports = { updateStdDAO, deleteStdDAO, getStudentDAO, regStudentDAO, loginDAO, getStdByIdDAO }
